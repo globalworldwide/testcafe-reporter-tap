@@ -1,11 +1,11 @@
 {
-  "name": "testcafe-reporter-tap-reporter-tap",
+  "name": "testcafe-reporter-tap",
   "version": "1.0.0",
-  "description": "tap-reporter-tap TestCafe reporter plugin.",
-  "repository": "https://github.com/willscripted/testcafe-reporter-tap-reporter-tap",
+  "description": "TAP TestCafe reporter plugin.",
+  "repository": "https://github.com/willscripted/testcafe-reporter-tap",
   "author": {
-    "name": "Will O&#39;Brien",
-    "email": "will.obrien@dibit.co"
+    "name": "Will O'Brien",
+    "email": "will.obrien@bracketsoftware.com"
   },
   "main": "lib/index",
   "files": [
