@@ -1,7 +1,5 @@
 export default function () {
     return {
-        noColors: true,
-
         reportTaskStart (startTime, userAgents, testCount) {
 
             this.write('TAP version 13')

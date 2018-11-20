@@ -1,5 +1,5 @@
 TAP version 13
-1..6
+1..7
 not ok - First test in first fixture
 ok - Second test in first fixture
 not ok - Third test in first fixture
