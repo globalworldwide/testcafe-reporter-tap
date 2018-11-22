@@ -1,9 +1,9 @@
 TAP version 13
 1..7
-not ok - First test in first fixture
-ok - Second test in first fixture
-not ok - Third test in first fixture
-not ok - First test in second fixture
-not ok - Second test in second fixture
-not ok - Third test in second fixture
-ok - First test in third fixture
+ok - First test in first fixture
+not ok - Second test in first fixture
+ok - Third test in first fixture
+ok - First test in second fixture
+ok - Second test in second fixture
+ok - Third test in second fixture
+not ok - First test in third fixture

@@ -1,6 +1,6 @@
 {
   "name": "testcafe-reporter-tap",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "TAP TestCafe reporter plugin.",
   "repository": "https://github.com/willscripted/testcafe-reporter-tap",
   "author": {
@@ -19,7 +19,8 @@
   "keywords": [
     "testcafe",
     "reporter",
-    "plugin"
+    "plugin",
+    "tap"
   ],
   "license": "MIT",
   "devDependencies": {
@@ -30,8 +31,8 @@
     "gulp-babel": "^5.2.1",
     "gulp-eslint": "^1.1.1",
     "gulp-mocha": "^2.2.0",
+    "lodash": "^4.17.11",
     "normalize-newline": "^1.0.2",
-    "publish-please": "^1.0.1",
     "publish-please": "^2.1.4",
     "read-file-relative": "^1.2.0",
     "testcafe": "^0.2.0-alpha"

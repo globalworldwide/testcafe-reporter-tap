@@ -1,8 +1,7 @@
 var buildReporterPlugin = require('testcafe').embeddingUtils.buildReporterPlugin;
 var pluginFactory       = require('../../lib');
-var reporterTestCalls   = require('./reporter-test-calls');
 
-module.exports = function createReport () {
+module.exports = function createReport (testCalls) {
     var outStream = {
         data: '',
 
@@ -13,7 +12,7 @@ module.exports = function createReport () {
 
     var plugin = buildReporterPlugin(pluginFactory, outStream);
 
-    reporterTestCalls.forEach(function (call) {
+    testCalls.forEach(function (call) {
         plugin[call.method].apply(plugin, call.args);
     });
 

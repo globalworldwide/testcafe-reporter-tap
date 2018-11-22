@@ -1,4 +1,4 @@
-export default function () {
+module.exports = function () {
     return {
         reportTaskStart (startTime, userAgents, testCount) {
 
@@ -15,7 +15,7 @@ export default function () {
 
         reportTestDone (name, testRunInfo) {
 
-            const result = testRunInfo.errs.length ? `ok` : `not ok`;
+            const result = testRunInfo.errs.length === 0 ? `ok` : `not ok`;
             const testNumber = '';
             const description = name;
             const directive = '';
@@ -28,4 +28,4 @@ export default function () {
         reportTaskDone (/* endTime, passed, warning */) {
         }
     };
-}
+};
