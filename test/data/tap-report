@@ -2,8 +2,213 @@ TAP version 13
 1..7
 ok - First test in first fixture
 not ok - Second test in first fixture
+  ---
+  errors:
+    - TEMPLATES: {}
+      userAgent: Chrome 41.0.2227 / Mac OS X 10.10.1
+      screenshotPath: /screenshots/1445437598847/errors
+      testRunState: inTest
+      type: uncaughtErrorOnPage
+      isTestCafeError: true
+      callsite:
+        filename: /home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js
+        lineNum: 3
+        callsiteFrameIdx: 0
+        stackFrames:
+          - functionName: someFunc
+            fileName: >-
+              /home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js
+            lineNumber: 4
+            columnNumber: 11
+            source: '    at someFunc (/home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js:4:11)'
+          - functionName: Object.<anonymous>
+            fileName: >-
+              /home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js
+            lineNumber: 8
+            columnNumber: 5
+            source: '    at Object.<anonymous> (/home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js:8:5)'
+          - functionName: Module._compile
+            fileName: module.js
+            lineNumber: 570
+            columnNumber: 32
+            source: '    at Module._compile (module.js:570:32)'
+          - functionName: Object.Module._extensions..js
+            fileName: module.js
+            lineNumber: 579
+            columnNumber: 10
+            source: '    at Object.Module._extensions..js (module.js:579:10)'
+          - functionName: Module.load
+            fileName: module.js
+            lineNumber: 487
+            columnNumber: 32
+            source: '    at Module.load (module.js:487:32)'
+          - functionName: tryModuleLoad
+            fileName: module.js
+            lineNumber: 446
+            columnNumber: 12
+            source: '    at tryModuleLoad (module.js:446:12)'
+          - functionName: Function.Module._load
+            fileName: module.js
+            lineNumber: 438
+            columnNumber: 3
+            source: '    at Function.Module._load (module.js:438:3)'
+          - functionName: Module.require
+            fileName: module.js
+            lineNumber: 497
+            columnNumber: 17
+            source: '    at Module.require (module.js:497:17)'
+          - functionName: require
+            fileName: internal/module.js
+            lineNumber: 20
+            columnNumber: 19
+            source: '    at require (internal/module.js:20:19)'
+          - functionName: Object.<anonymous>
+            fileName: >-
+              /home/will/projects/prodperf/pp-tap-reporter/test/utils/reporter-test-calls.js
+            lineNumber: 4
+            columnNumber: 38
+            source: '    at Object.<anonymous> (/home/will/projects/prodperf/pp-tap-reporter/test/utils/reporter-test-calls.js:4:38)'
+        isV8Frames: false
+      errMsg: Some error
+      pageDestUrl: 'http://example.org'
+    - TEMPLATES: {}
+      userAgent: Firefox 47 / Mac OS X 10.10.1
+      testRunState: inTest
+      type: actionElementNotFoundError
+      isTestCafeError: true
+      callsite:
+        filename: /home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js
+        lineNum: 3
+        callsiteFrameIdx: 0
+        stackFrames:
+          - functionName: someFunc
+            fileName: >-
+              /home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js
+            lineNumber: 4
+            columnNumber: 11
+            source: '    at someFunc (/home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js:4:11)'
+          - functionName: Object.<anonymous>
+            fileName: >-
+              /home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js
+            lineNumber: 8
+            columnNumber: 5
+            source: '    at Object.<anonymous> (/home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js:8:5)'
+          - functionName: Module._compile
+            fileName: module.js
+            lineNumber: 570
+            columnNumber: 32
+            source: '    at Module._compile (module.js:570:32)'
+          - functionName: Object.Module._extensions..js
+            fileName: module.js
+            lineNumber: 579
+            columnNumber: 10
+            source: '    at Object.Module._extensions..js (module.js:579:10)'
+          - functionName: Module.load
+            fileName: module.js
+            lineNumber: 487
+            columnNumber: 32
+            source: '    at Module.load (module.js:487:32)'
+          - functionName: tryModuleLoad
+            fileName: module.js
+            lineNumber: 446
+            columnNumber: 12
+            source: '    at tryModuleLoad (module.js:446:12)'
+          - functionName: Function.Module._load
+            fileName: module.js
+            lineNumber: 438
+            columnNumber: 3
+            source: '    at Function.Module._load (module.js:438:3)'
+          - functionName: Module.require
+            fileName: module.js
+            lineNumber: 497
+            columnNumber: 17
+            source: '    at Module.require (module.js:497:17)'
+          - functionName: require
+            fileName: internal/module.js
+            lineNumber: 20
+            columnNumber: 19
+            source: '    at require (internal/module.js:20:19)'
+          - functionName: Object.<anonymous>
+            fileName: >-
+              /home/will/projects/prodperf/pp-tap-reporter/test/utils/reporter-test-calls.js
+            lineNumber: 4
+            columnNumber: 38
+            source: '    at Object.<anonymous> (/home/will/projects/prodperf/pp-tap-reporter/test/utils/reporter-test-calls.js:4:38)'
+        isV8Frames: false
+  severity: fail
+  
+  ...
 ok - Third test in first fixture
 ok - First test in second fixture
 ok - Second test in second fixture
 ok - Third test in second fixture
 not ok - First test in third fixture
+  ---
+  errors:
+    - TEMPLATES: {}
+      userAgent: Firefox 47 / Mac OS X 10.10.1
+      testRunState: inBeforeEach
+      type: actionElementNotFoundError
+      isTestCafeError: true
+      callsite:
+        filename: /home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js
+        lineNum: 3
+        callsiteFrameIdx: 0
+        stackFrames:
+          - functionName: someFunc
+            fileName: >-
+              /home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js
+            lineNumber: 4
+            columnNumber: 11
+            source: '    at someFunc (/home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js:4:11)'
+          - functionName: Object.<anonymous>
+            fileName: >-
+              /home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js
+            lineNumber: 8
+            columnNumber: 5
+            source: '    at Object.<anonymous> (/home/will/projects/prodperf/pp-tap-reporter/test/utils/test-callsite.js:8:5)'
+          - functionName: Module._compile
+            fileName: module.js
+            lineNumber: 570
+            columnNumber: 32
+            source: '    at Module._compile (module.js:570:32)'
+          - functionName: Object.Module._extensions..js
+            fileName: module.js
+            lineNumber: 579
+            columnNumber: 10
+            source: '    at Object.Module._extensions..js (module.js:579:10)'
+          - functionName: Module.load
+            fileName: module.js
+            lineNumber: 487
+            columnNumber: 32
+            source: '    at Module.load (module.js:487:32)'
+          - functionName: tryModuleLoad
+            fileName: module.js
+            lineNumber: 446
+            columnNumber: 12
+            source: '    at tryModuleLoad (module.js:446:12)'
+          - functionName: Function.Module._load
+            fileName: module.js
+            lineNumber: 438
+            columnNumber: 3
+            source: '    at Function.Module._load (module.js:438:3)'
+          - functionName: Module.require
+            fileName: module.js
+            lineNumber: 497
+            columnNumber: 17
+            source: '    at Module.require (module.js:497:17)'
+          - functionName: require
+            fileName: internal/module.js
+            lineNumber: 20
+            columnNumber: 19
+            source: '    at require (internal/module.js:20:19)'
+          - functionName: Object.<anonymous>
+            fileName: >-
+              /home/will/projects/prodperf/pp-tap-reporter/test/utils/reporter-test-calls.js
+            lineNumber: 4
+            columnNumber: 38
+            source: '    at Object.<anonymous> (/home/will/projects/prodperf/pp-tap-reporter/test/utils/reporter-test-calls.js:4:38)'
+        isV8Frames: false
+  severity: fail
+  
+  ...

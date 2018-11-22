@@ -3,6 +3,7 @@ var normalizeNewline = require('normalize-newline');
 var read             = require('read-file-relative').readSync;
 var createReport     = require('./utils/create-report');
 var _                = require('lodash');
+var yaml             = require('js-yaml');
 
 var TestRunErrorFormattableAdapter = require('testcafe').embeddingUtils.TestRunErrorFormattableAdapter;
 var UncaughtErrorOnPage            = require('testcafe').embeddingUtils.testRunErrors.UncaughtErrorOnPage;
@@ -154,8 +155,49 @@ it('has a test plan', function () {
     assert.strictEqual(lines[1], `1..${testCount}`);
 });
 
-xit('allows TODO directives');
-xit('allows SKIP directives');
+it('allows SKIP directives', function () {
+
+    var calls = [
+        {
+            method: 'reportTaskStart',
+            args:   [
+                new Date('1970-01-01T00:00:00.000Z'),
+                [
+                    'Chrome 41.0.2227 / Mac OS X 10.10.1',
+                    'Firefox 47 / Mac OS X 10.10.1'
+                ],
+                7
+            ]
+        },
+        {
+            method: 'reportFixtureStart',
+            args:   [
+                'First fixture',
+                './fixture1.js'
+            ]
+        },
+        {
+            method: 'reportTestDone',
+            args:   [
+                'First test in first fixture',
+                {
+                    errs:           [],
+                    durationMs:     74000,
+                    unstable:       true,
+                    screenshotPath: '/screenshots/1445437598847',
+                    skipped:        true
+                }
+            ]
+        }
+    ];
+    var report = createReport(calls);
+    var lines = report.split('\n');
+
+    var skippedLines = _.filter(lines, RegExp.prototype.test.bind(/ok (\d )?# skip /));
+
+    assert.ok(skippedLines.length === 1);
+
+});
 
 it('handles guards against fixtures that start with numbers', function () {
     var fixtureTitle = '111';
@@ -245,9 +287,65 @@ it('handles guards against titles that start with numbers', function () {
 
 });
 
-xit('includes descriptions');
-xit('has test numbers');
-xit('includes info about failed tests');
+it('includes info about failed tests', function () {
+
+    var calls = [
+        {
+            method: 'reportTaskStart',
+            args:   [
+                new Date('1970-01-01T00:00:00.000Z'),
+                [
+                    'Chrome 41.0.2227 / Mac OS X 10.10.1',
+                    'Firefox 47 / Mac OS X 10.10.1'
+                ],
+                7
+            ]
+        },
+        {
+            method: 'reportFixtureStart',
+            args:   [
+                'First fixture',
+                './fixture1.js'
+            ]
+        },
+        {
+            method: 'reportTestDone',
+            args:   [
+                'First test in first fixture',
+                {
+                    errs: makeErrors([
+                        {
+
+                            err: new UncaughtErrorOnPage('Some error', 'http://example.org'),
+
+                            metaInfo: {
+                                userAgent:      'Chrome 41.0.2227 / Mac OS X 10.10.1',
+                                screenshotPath: '/screenshots/1445437598847/errors',
+                                testRunState:   'inTest'
+                            }
+                        }
+                    ]),
+                    durationMs:     74000,
+                    unstable:       false,
+                    screenshotPath: '/screenshots/1445437598847'
+                }
+            ]
+        }
+    ];
+
+    var report = createReport(calls);
+    var lines = report.split('\n');
+
+    var idxYamlStart = _.findIndex(lines, RegExp.prototype.test.bind(/^\s+---/));
+    var idxYamlEnd = _.findIndex(lines, RegExp.prototype.test.bind(/^\s+\.\.\./));
+
+    var errorYaml = _.slice(lines, 1 + idxYamlStart, idxYamlEnd).join('\n');
+    var info = yaml.load(errorYaml);
+
+    assert(_.has(info, 'errors'));
+    assert(_.has(info, 'severity'));
+
+});
 
 var reporterTestCalls   = require('./utils/reporter-test-calls');
 

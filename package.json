@@ -36,5 +36,8 @@
     "publish-please": "^2.1.4",
     "read-file-relative": "^1.2.0",
     "testcafe": "^0.2.0-alpha"
+  },
+  "dependencies": {
+    "js-yaml": "^3.12.0"
   }
 }
