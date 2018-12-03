@@ -1,10 +1,10 @@
-# `testcafe-reporter-tap`
+# testcafe-reporter-tap
 [![Build Status](https://travis-ci.org/willscripted/testcafe-reporter-tap.svg)](https://travis-ci.org/willscripted/testcafe-reporter-tap)
 
 This is the **tap** reporter plugin for [TestCafe](http://devexpress.github.io/testcafe).
 
 <p align="center">
-    <img src="https://raw.github.com/willscripted/testcafe-reporter-tap/master/media/preview.png" alt="preview" />
+    <img src="https://raw.github.com/bracket-software/testcafe-reporter-tap/master/media/preview.png" alt="preview" />
 </p>
 
 ## Install
@@ -35,8 +35,8 @@ testCafe
 
 ## Author
 
-Will O'Brien
+[ProdPerfect](https://www.prodperfect.com/).
 
 ## License
 
-MIT. See [LICENSE](https://github.com/willscripted/testcafe-reporter-tap/blob/master/LICENSE).
+MIT. See [LICENSE](https://github.com/prodperfect/testcafe-reporter-tap/blob/master/LICENSE).

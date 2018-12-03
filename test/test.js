@@ -1,12 +1,14 @@
 var assert           = require('assert');
 var normalizeNewline = require('normalize-newline');
 var read             = require('read-file-relative').readSync;
-var createReport     = require('./utils/create-report');
 var _                = require('lodash');
 var yaml             = require('js-yaml');
 
 var TestRunErrorFormattableAdapter = require('testcafe').embeddingUtils.TestRunErrorFormattableAdapter;
 var UncaughtErrorOnPage            = require('testcafe').embeddingUtils.testRunErrors.UncaughtErrorOnPage;
+
+var createReport     = require('./utils/create-report');
+var reporterTestCalls   = require('./utils/reporter-test-calls');
 
 function makeErrors (errDescrs) {
     return errDescrs.map(function (descr) {
@@ -16,47 +18,10 @@ function makeErrors (errDescrs) {
 
 it('shows failed tests as \'not ok\'', function () {
     var calls = [
-        {
-            method: 'reportTaskStart',
-            args:   [
-                new Date('1970-01-01T00:00:00.000Z'),
-                [
-                    'Chrome 41.0.2227 / Mac OS X 10.10.1',
-                    'Firefox 47 / Mac OS X 10.10.1'
-                ],
-                7
-            ]
-        },
-        {
-            method: 'reportFixtureStart',
-            args:   [
-                'First fixture',
-                './fixture1.js'
-            ]
-        },
-        {
-            method: 'reportTestDone',
-            args:   [
-                'First test in first fixture',
-                {
-                    errs: makeErrors([
-                        {
-
-                            err: new UncaughtErrorOnPage('Some error', 'http://example.org'),
-
-                            metaInfo: {
-                                userAgent:      'Chrome 41.0.2227 / Mac OS X 10.10.1',
-                                screenshotPath: '/screenshots/1445437598847/errors',
-                                testRunState:   'inTest'
-                            }
-                        }
-                    ]),
-                    durationMs:     74000,
-                    unstable:       false,
-                    screenshotPath: '/screenshots/1445437598847'
-                }
-            ]
-        }
+        { method: 'reportTaskStart', args: [ new Date('1970-01-01T00:00:00.000Z'), [ 'SomeBrowser' ], 7 ] },
+        { method: 'reportFixtureStart', args: [ 'First fixture', './fixture1.js' ] },
+        { method: 'reportTestDone', args: [ 'First test in first fixture', { errs: makeErrors([{ err: new UncaughtErrorOnPage('Some error', 'http://example.org'), metaInfo: { } }]) }] },
+        { method: 'reportTaskDone', args: [new Date('1970-01-01T00:15:25.000Z'), 4, [] ] }
     ];
 
     var lines = createReport(calls).split('\n');
@@ -71,36 +36,10 @@ it('shows failed tests as \'not ok\'', function () {
 
 it('shows passing tests as \'ok\'', function () {
     var calls = [
-        {
-            method: 'reportTaskStart',
-            args:   [
-                new Date('1970-01-01T00:00:00.000Z'),
-                [
-                    'Chrome 41.0.2227 / Mac OS X 10.10.1',
-                    'Firefox 47 / Mac OS X 10.10.1'
-                ],
-                7
-            ]
-        },
-        {
-            method: 'reportFixtureStart',
-            args:   [
-                'First fixture',
-                './fixture1.js'
-            ]
-        },
-        {
-            method: 'reportTestDone',
-            args:   [
-                'First test in first fixture',
-                {
-                    errs:           [],
-                    durationMs:     74000,
-                    unstable:       true,
-                    screenshotPath: '/screenshots/1445437598847'
-                }
-            ]
-        }
+        { method: 'reportTaskStart', args: [ new Date('1970-01-01T00:00:00.000Z'), [ 'Some useragent' ], 7 ] },
+        { method: 'reportFixtureStart', args: [ 'First fixture', './fixture1.js' ] },
+        { method: 'reportTestDone', args: [ 'First test in first fixture', { errs: [] } ] },
+        { method: 'reportTaskDone', args: [new Date('1970-01-01T00:15:25.000Z'), 4, [] ] }
     ];
 
     var lines = createReport(calls).split('\n');
@@ -115,39 +54,20 @@ it('shows passing tests as \'ok\'', function () {
 
 it('has a version line', function () {
     var calls = [
-        {
-            method: 'reportTaskStart',
-            args:   [
-                new Date('1970-01-01T00:00:00.000Z'),
-                [
-                    'Chrome 41.0.2227 / Mac OS X 10.10.1',
-                    'Firefox 47 / Mac OS X 10.10.1'
-                ],
-                1
-            ]
-        }
+      { method: 'reportTaskStart', args: [ new Date('1970-01-01T00:00:00.000Z'), [ 'Some useragent' ], 7 ] },
+      { method: 'reportTaskDone', args: [new Date('1970-01-01T00:15:25.000Z'), 4, [] ] }
     ];
     var report = createReport(calls);
     var lines = report.split('\n');
 
     assert.strictEqual(lines[0], 'TAP version 13');
-
 });
 
 it('has a test plan', function () {
     var testCount = 6;
     var calls = [
-        {
-            method: 'reportTaskStart',
-            args:   [
-                new Date('1970-01-01T00:00:00.000Z'),
-                [
-                    'Chrome 41.0.2227 / Mac OS X 10.10.1',
-                    'Firefox 47 / Mac OS X 10.10.1'
-                ],
-                testCount
-            ]
-        }
+      { method: 'reportTaskStart', args: [ new Date('1970-01-01T00:00:00.000Z'), [ 'Some useragent' ], testCount ] },
+      { method: 'reportTaskDone', args: [new Date('1970-01-01T00:15:25.000Z'), 4, [] ] }
     ];
     var report = createReport(calls);
     var lines = report.split('\n');
@@ -158,38 +78,12 @@ it('has a test plan', function () {
 it('allows SKIP directives', function () {
 
     var calls = [
-        {
-            method: 'reportTaskStart',
-            args:   [
-                new Date('1970-01-01T00:00:00.000Z'),
-                [
-                    'Chrome 41.0.2227 / Mac OS X 10.10.1',
-                    'Firefox 47 / Mac OS X 10.10.1'
-                ],
-                7
-            ]
-        },
-        {
-            method: 'reportFixtureStart',
-            args:   [
-                'First fixture',
-                './fixture1.js'
-            ]
-        },
-        {
-            method: 'reportTestDone',
-            args:   [
-                'First test in first fixture',
-                {
-                    errs:           [],
-                    durationMs:     74000,
-                    unstable:       true,
-                    screenshotPath: '/screenshots/1445437598847',
-                    skipped:        true
-                }
-            ]
-        }
+        { method: 'reportTaskStart', args: [ new Date('1970-01-01T00:00:00.000Z'), [ 'Some useragent' ], 7 ] },
+        { method: 'reportFixtureStart', args: [ 'First fixture', './fixture1.js' ] },
+        { method: 'reportTestDone', args: [ 'First test in first fixture', { errs: [], skipped: true } ] },
+        { method: 'reportTaskDone', args: [new Date('1970-01-01T00:15:25.000Z'), 4, [] ] }
     ];
+
     var report = createReport(calls);
     var lines = report.split('\n');
 
@@ -202,41 +96,16 @@ it('allows SKIP directives', function () {
 it('handles guards against fixtures that start with numbers', function () {
     var fixtureTitle = '111';
     var calls = [
-        {
-            method: 'reportTaskStart',
-            args:   [
-                new Date('1970-01-01T00:00:00.000Z'),
-                [
-                    'Chrome 41.0.2227 / Mac OS X 10.10.1',
-                    'Firefox 47 / Mac OS X 10.10.1'
-                ],
-                7
-            ]
-        },
-        {
-            method: 'reportFixtureStart',
-            args:   [
-                fixtureTitle,
-                './fixture1.js'
-            ]
-        },
-        {
-            method: 'reportTestDone',
-            args:   [
-                'First test in first fixture',
-                {
-                    errs:           [],
-                    durationMs:     74000,
-                    unstable:       true,
-                    screenshotPath: '/screenshots/1445437598847'
-                }
-            ]
-        }
+        { method: 'reportTaskStart', args: [ new Date('1970-01-01T00:00:00.000Z'), [ 'Some useragent' ], 7 ] },
+        { method: 'reportFixtureStart', args: [ fixtureTitle, './fixture1.js' ] },
+        { method: 'reportTestDone', args: [ 'First test in first fixture', { errs: [] } ] },
+        { method: 'reportTaskDone', args: [new Date('1970-01-01T00:15:25.000Z'), 4, [] ] }
     ];
 
     var report = createReport(calls);
     var lines = report.split('\n');
 
+    assert.ok(lines.length > 3);
     lines.forEach(function (line) {
         assert.ok(!/^(not )?ok 111/.test(line));
     });
@@ -246,36 +115,10 @@ it('handles guards against fixtures that start with numbers', function () {
 it('handles guards against titles that start with numbers', function () {
     var testTitle = '111';
     var calls = [
-        {
-            method: 'reportTaskStart',
-            args:   [
-                new Date('1970-01-01T00:00:00.000Z'),
-                [
-                    'Chrome 41.0.2227 / Mac OS X 10.10.1',
-                    'Firefox 47 / Mac OS X 10.10.1'
-                ],
-                7
-            ]
-        },
-        {
-            method: 'reportFixtureStart',
-            args:   [
-                'First fixture',
-                './fixture1.js'
-            ]
-        },
-        {
-            method: 'reportTestDone',
-            args:   [
-                testTitle,
-                {
-                    errs:           [],
-                    durationMs:     74000,
-                    unstable:       true,
-                    screenshotPath: '/screenshots/1445437598847'
-                }
-            ]
-        }
+        { method: 'reportTaskStart', args: [ new Date('1970-01-01T00:00:00.000Z'), [ 'SomeBrowser' ], 7 ] },
+        { method: 'reportFixtureStart', args: [ 'First fixture', './fixture1.js' ] },
+        { method: 'reportTestDone', args: [ testTitle, { errs: [] }] },
+        { method: 'reportTaskDone', args: [new Date('1970-01-01T00:15:25.000Z'), 4, [] ] }
     ];
 
     var report = createReport(calls);
@@ -290,47 +133,10 @@ it('handles guards against titles that start with numbers', function () {
 it('includes info about failed tests', function () {
 
     var calls = [
-        {
-            method: 'reportTaskStart',
-            args:   [
-                new Date('1970-01-01T00:00:00.000Z'),
-                [
-                    'Chrome 41.0.2227 / Mac OS X 10.10.1',
-                    'Firefox 47 / Mac OS X 10.10.1'
-                ],
-                7
-            ]
-        },
-        {
-            method: 'reportFixtureStart',
-            args:   [
-                'First fixture',
-                './fixture1.js'
-            ]
-        },
-        {
-            method: 'reportTestDone',
-            args:   [
-                'First test in first fixture',
-                {
-                    errs: makeErrors([
-                        {
-
-                            err: new UncaughtErrorOnPage('Some error', 'http://example.org'),
-
-                            metaInfo: {
-                                userAgent:      'Chrome 41.0.2227 / Mac OS X 10.10.1',
-                                screenshotPath: '/screenshots/1445437598847/errors',
-                                testRunState:   'inTest'
-                            }
-                        }
-                    ]),
-                    durationMs:     74000,
-                    unstable:       false,
-                    screenshotPath: '/screenshots/1445437598847'
-                }
-            ]
-        }
+        { method: 'reportTaskStart', args: [ new Date('1970-01-01T00:00:00.000Z'), [ 'SomeBrowser' ], 7 ] },
+        { method: 'reportFixtureStart', args: [ 'First fixture', './fixture1.js' ] },
+        { method: 'reportTestDone', args: [ 'First test in first fixture', { errs: makeErrors([{ err: new UncaughtErrorOnPage('Some error', 'http://example.org'), metaInfo: { } }]) }] },
+        { method: 'reportTaskDone', args: [new Date('1970-01-01T00:15:25.000Z'), 4, [] ] }
     ];
 
     var report = createReport(calls);
@@ -346,8 +152,6 @@ it('includes info about failed tests', function () {
     assert(_.has(info, 'severity'));
 
 });
-
-var reporterTestCalls   = require('./utils/reporter-test-calls');
 
 it('Should produce TAP report', function () {
     var report   = createReport(reporterTestCalls);

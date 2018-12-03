@@ -1,55 +1,41 @@
-var yaml = require('js-yaml');
+const template = require('./template');
+const formatErrors = require('./format-errors');
 
 module.exports = function () {
     return {
-        reportTaskStart (startTime, userAgents, testCount) {
+        noColors:       true,
+        currentFixture: null,
 
-            this.write('TAP version 13')
-              .newline();
-
-            this.write(`1..${testCount}`)
-              .newline();
-
+        report: {
+            total:    0,
+            fixtures: []
         },
 
-        reportFixtureStart (/* name, path */) {
+        reportTaskStart (startTime, userAgents, testCount) {
+            this.report.testCount  = testCount;
+        },
+
+        reportFixtureStart (name, path) {
+            this.currentFixture = { name, path, tests: [] };
+            this.report.fixtures.push(this.currentFixture);
         },
 
         reportTestDone (name, testRunInfo) {
-            const result = testRunInfo.errs.length === 0 ? `ok` : `not ok`;
-            const testNumber = '';
-            const directive = '';
-            const skip = testRunInfo.skipped ? `# skip ` : '';
+            var hasErrors = testRunInfo.errs.length > 0;
+            var errorDetails = hasErrors ?
+                formatErrors(testRunInfo.errs) :
+                null;
 
-            this.write(`${result} ${testNumber ? testNumber + ' ' : ''}${skip}- ${name}${directive ? ' ' + directive : ''}`)
-                .newline();
-
-            if (testRunInfo.errs.length !== 0) {
-
-                this.write(`  ---`)
-                    .newline();
-
-                var errors = JSON.parse(
-                    JSON.stringify(
-                        testRunInfo.errs
-                    )
-                );
-
-                var errorYaml = yaml.safeDump({
-                    errors:   errors,
-                    severity: 'fail'
-                }).split('\n').join('\n  ');
-
-                this.write('  ' + errorYaml);
-
-                this.write(`\n  ...`)
-                    .newline();
-
-            }
-
+            this.currentFixture.tests.push({
+                name,
+                errorDetails,
+                hasErrors,
+                skipped: testRunInfo.skipped
+            });
         },
 
-        reportTaskDone (/* endTime, passed, warning */) {
+        reportTaskDone (/* endTime, passed, warnings */) {
+            this.write(template(this.report));
         }
     };
 };

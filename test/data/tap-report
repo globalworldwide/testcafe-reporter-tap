@@ -136,7 +136,6 @@ not ok - Second test in first fixture
             source: '    at Object.<anonymous> (/home/will/projects/prodperf/pp-tap-reporter/test/utils/reporter-test-calls.js:4:38)'
         isV8Frames: false
   severity: fail
-  
   ...
 ok - Third test in first fixture
 ok - First test in second fixture
@@ -210,5 +209,4 @@ not ok - First test in third fixture
             source: '    at Object.<anonymous> (/home/will/projects/prodperf/pp-tap-reporter/test/utils/reporter-test-calls.js:4:38)'
         isV8Frames: false
   severity: fail
-  
   ...
