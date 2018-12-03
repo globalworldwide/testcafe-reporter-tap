@@ -1,6 +1,4 @@
 var assert           = require('assert');
-var normalizeNewline = require('normalize-newline');
-var read             = require('read-file-relative').readSync;
 var _                = require('lodash');
 var yaml             = require('js-yaml');
 
@@ -8,7 +6,6 @@ var TestRunErrorFormattableAdapter = require('testcafe').embeddingUtils.TestRunE
 var UncaughtErrorOnPage            = require('testcafe').embeddingUtils.testRunErrors.UncaughtErrorOnPage;
 
 var createReport     = require('./utils/create-report');
-var reporterTestCalls   = require('./utils/reporter-test-calls');
 
 function makeErrors (errDescrs) {
     return errDescrs.map(function (descr) {
@@ -151,14 +148,4 @@ it('includes info about failed tests', function () {
     assert(_.has(info, 'errors'));
     assert(_.has(info, 'severity'));
 
-});
-
-it('Should produce TAP report', function () {
-    var report   = createReport(reporterTestCalls);
-    var expected = read('./data/tap-report');
-
-    report   = normalizeNewline(report).trim();
-    expected = normalizeNewline(expected).trim();
-
-    assert.strictEqual(report, expected);
 });
