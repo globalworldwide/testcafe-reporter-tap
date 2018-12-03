@@ -2,7 +2,7 @@
   "name": "testcafe-reporter-tap",
   "version": "0.2.1",
   "description": "TAP TestCafe reporter plugin.",
-  "repository": "https://github.com/willscripted/testcafe-reporter-tap",
+  "repository": "https://github.com/ProdPerfect/testcafe-reporter-tap",
   "author": {
     "name": "Will O'Brien",
     "email": "will.obrien@bracketsoftware.com"
