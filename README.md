@@ -5,6 +5,7 @@ This is the **tap** reporter plugin for [TestCafe](http://devexpress.github.io/t
 
 <p align="center">
     <img src="https://raw.github.com/ProdPerfect/testcafe-reporter-tap/master/media/preview.png" alt="preview" />
+
 </p>
 
 ## Install
