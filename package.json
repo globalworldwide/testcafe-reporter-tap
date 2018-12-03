@@ -1,6 +1,6 @@
 {
   "name": "testcafe-reporter-tap",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "description": "TAP TestCafe reporter plugin.",
   "repository": "https://github.com/ProdPerfect/testcafe-reporter-tap",
   "author": {
