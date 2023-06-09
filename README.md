@@ -1,17 +1,16 @@
 # testcafe-reporter-tap
-[![Build Status](https://travis-ci.org/ProdPerfect/testcafe-reporter-tap.svg)](https://travis-ci.org/ProdPerfect/testcafe-reporter-tap)
 
 This is the **tap** reporter plugin for [TestCafe](http://devexpress.github.io/testcafe).
 
 <p align="center">
-    <img src="https://raw.github.com/ProdPerfect/testcafe-reporter-tap/master/media/preview.png" alt="preview" />
+    <img src="https://raw.github.com/globalworldwide/testcafe-reporter-tap/master/media/preview.png" alt="preview" />
 
 </p>
 
 ## Install
 
 ```
-npm install testcafe-reporter-tap
+npm install @globalworldwide/testcafe-reporter-tap
 ```
 
 ## Usage
@@ -19,7 +18,7 @@ npm install testcafe-reporter-tap
 When you run tests from the command line, specify the reporter name by using the `--reporter` option:
 
 ```
-testcafe chrome 'path/to/test/file.js' --reporter tap
+testcafe chrome 'path/to/test/file.js' --reporter @globalworldwide/testcafe-reporter-tap
 ```
 
 
@@ -30,14 +29,14 @@ testCafe
     .createRunner()
     .src('path/to/test/file.js')
     .browsers('chrome')
-    .reporter('tap') // <-
+    .reporter('@globalworldwide/testcafe-reporter-tap') // <-
     .run();
 ```
 
-## Author
+## Original Author
 
-[ProdPerfect](https://www.prodperfect.com/).
+This is a fork of https://github.com/ProdPerfect/testcafe-reporter-tap by [ProdPerfect](https://www.prodperfect.com/).
 
 ## License
 
-MIT. See [LICENSE](https://github.com/ProdPerfect/testcafe-reporter-tap/blob/master/LICENSE).
+MIT. See [LICENSE](https://github.com/globalworldwide/testcafe-reporter-tap/blob/master/LICENSE).
