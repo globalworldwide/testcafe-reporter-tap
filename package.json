@@ -1,5 +1,5 @@
 {
-  "name": "@globalworldwide/testcafe-reporter-tap",
+  "name": "testcafe-reporter-tap-gww",
   "version": "0.9.0",
   "description": "TAP TestCafe reporter plugin.",
   "repository": "https://github.com/globalworldwide/testcafe-reporter-tap",
@@ -13,14 +13,16 @@
       "email": "matthew@globalworldwide.com"
     }
   ],
-  "main": "lib/index",
+  "main": "src/index",
   "files": [
-    "lib"
+    "src"
   ],
   "scripts": {
-    "test": "gulp test",
-    "publish-please": "publish-please",
-    "prepublish": "publish-please guard"
+    "test": "mocha --ui bdd --reporter spec --timeout 2000 test/**.js",
+    "lint": "eslint src/**.js test/**.js",
+    "format": "prettier \"{src,test}/**/*.{js,ts}\" --write",
+    "presubmit": "npm-run-all -s format lint test",
+    "prepublish": "npm run presubmit"
   },
   "keywords": [
     "testcafe",
@@ -30,22 +32,16 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "babel-eslint": "^4.0.10",
-    "callsite-record": "^3.2.0",
-    "del": "^1.2.0",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^5.2.1",
-    "gulp-eslint": "^1.1.1",
-    "gulp-mocha": "^2.2.0",
-    "lodash": "^4.17.11",
-    "normalize-newline": "^1.0.2",
-    "publish-please": "^2.1.4",
-    "read-file-relative": "^1.2.0",
-    "testcafe": "^0.2.0-alpha"
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
+    "mocha": "^10.2.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.8",
+    "testcafe": "^2.6.2"
   },
   "dependencies": {
-    "js-yaml": "^3.12.0",
-    "mustache": "^3.0.1",
-    "ramda": "^0.26.1"
+    "js-yaml": "^4.1.0",
+    "mustache": "^4.2.0",
+    "ramda": "^0.29.0"
   }
 }

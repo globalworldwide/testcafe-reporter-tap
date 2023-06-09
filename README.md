@@ -10,7 +10,7 @@ This is the **tap** reporter plugin for [TestCafe](http://devexpress.github.io/t
 ## Install
 
 ```
-npm install @globalworldwide/testcafe-reporter-tap
+npm install testcafe-reporter-tap-gww
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ npm install @globalworldwide/testcafe-reporter-tap
 When you run tests from the command line, specify the reporter name by using the `--reporter` option:
 
 ```
-testcafe chrome 'path/to/test/file.js' --reporter @globalworldwide/testcafe-reporter-tap
+testcafe chrome 'path/to/test/file.js' --reporter testcafe-reporter-tap-gww
 ```
 
 
@@ -29,7 +29,7 @@ testCafe
     .createRunner()
     .src('path/to/test/file.js')
     .browsers('chrome')
-    .reporter('@globalworldwide/testcafe-reporter-tap') // <-
+    .reporter('testcafe-reporter-tap-gww') // <-
     .run();
 ```
 
