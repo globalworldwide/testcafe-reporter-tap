@@ -24,6 +24,11 @@ module.exports = function () {
       var hasErrors = testRunInfo.errs.length > 0
       var errorDetails = hasErrors ? formatErrors(testRunInfo.errs) : null
 
+      // testcafe does not include skipped tests in the testCount, but TAP expects them
+      if (testRunInfo.skipped) {
+        ++this.report.testCount
+      }
+
       this.currentFixture.tests.push({
         name,
         errorDetails,
